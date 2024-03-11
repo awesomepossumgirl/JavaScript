@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // D-Day 계산기
+        // 남은 일 수(밀리초) = 특정 날짜 객체 - 현재 날짜 객체
+
+        // 1초 = 1,000(msc)
+        // 1분(60초) = 1,000 * 60 = 60,000(msc)
+        // 1시간(60분) = 1,000 * 60 * 60 = 3,600,000(msc)
+        // 1일(60분*24) = 1,000 * 60 * 60 * 24 = 86,400,000(msc)
+
+        var today = new Date();
+        document.write(today,"<br>");
+        var nowYear = today.getFullYear();
+        document.write(nowYear,"<br>");
+
+        var theDate = new Date(nowYear, 11, 31);
+        var diffDate = theDate.getTime() - today.getTime();
+
+        var result = Math.ceil(diffDate/(60*1000*60*24));
+        document.write("연말 D-day : "+result+"일 남았습니다.");
+    </script>
+</body>
+</html>
