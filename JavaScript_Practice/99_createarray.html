@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 자바스크립트 배열 객체 생성하는 법
+
+        // 1. var 참조변수 = new Array();
+        // 참조변수[0]=값1; 
+        // 참조변수[1]=값2; ..... 참조변수[n-1]=값n;
+        // 2. var 참조변수 = new Array(값1, 값2, 값3, 값4);
+        // 3. var 참조변수 = [값1, 값2, 값3, ... 값n];
+
+        var arr1 = new Array();
+        arr1[0] = 1;
+        arr1[1] = "awesome1";
+        arr1[2] = true;
+
+        var arr2 = new Array(2, "awesome2", true);
+        var arr3 = [3, "awesome3", true];
+
+        document.write("<h3>배열값 가져오기-1</h3>");
+        document.write(arr1[0], "<br>");
+        document.write(arr1[1], "<br>");
+        document.write(arr1[2], "<br>");
+
+        document.write("<h3>배열값 가져오기-2</h3>");
+        for(var i=0; i<arr2.length; i++) {
+            document.write(arr2[i], "<br>");
+        }
+
+        document.write("<h3>배열값 가져오기-3</h3>");
+        for(i in arr2) {
+            document.write(arr3[i], "<br>");
+        }
+    </script>
+</body>
+</html>
