@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .music-body {
+            background-color: #99bad7;
+            font-family: "Rubik", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            width: 190px;
+            margin: 0;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        .music-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px 0 rgba(186, 184, 184, 0.6);
+            display: flex;
+            padding: 10px 20px;
+            position: relative;
+            margin: 100px 0;
+            z-index: 10;
+            width: 180px; /* Updated */
+            height: 90px;
+            flex-direction: column;
+        }
+
+        .music-info {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            position: absolute;
+            top: -50px;
+            left: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+            z-index: 0;
+            text-align: right; /* Align text and bar to the right */
+            display: flex; /* Use flex for alignment */
+            flex-direction: column;
+            align-items: flex-end; /* Align items to the right */
+        }
+
+        .music-container.play .music-info {
+            opacity: 1;
+            transform: translateY(10%);
+        }
+
+        .music-info h2 {
+            font-size: 0.6rem; /* Adjusted */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .progress-container {
+            background-color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px 0;
+            height: 4px;
+            width: 40%;
+        }
+
+        .progress {
+            background-color: #fe8daa;
+            border-radius: 5px;
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .img-container {
+            position: relative;
+            width: 70px; /* Updated */
+            height: 70px; /* Added */
+        }
+
+        .img-container img {
+            border-radius: 50%;
+            object-fit: cover;
+            height: 70px; /* Updated */
+            width: 70px; /* Updated */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            animation: rotateImage 3s linear infinite;
+            animation-play-state: paused;
+            border: 5px solid white; /* Added white border */
+        }
+
+        .img-container::after {
+            content: '';
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            bottom: 130%;
+            left: 50%;
+            height: 15px; /* Adjusted */
+            width: 15px; /* Adjusted */
+            transform: translate(-50%, 50%);
+        }
+
+        .music-container.play .img-container img {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateImage {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            margin-top: 10px; /* Adjusted */
+        }
+
+        .action-btn {
+            background-color: #fff;
+            border: 0;
+            color: #490349;
+            font-size: 16px; /* Adjusted */
+            cursor: pointer;
+            padding: 5px; /* Adjusted */
+            margin: 0 10px; /* Adjusted */
+        }
+
+        .action-btn:focus {
+            outline: none;
+        }
+
+        .action-btn:hover, .action-btn.action-btn-big:hover {
+            color: #8d91fe;
+        }
+
+        .action-btn.action-btn-big {
+            color: #0c085f;
+            font-size: 20px; /* Adjusted */
+        }
+        
+        .music-body .buildings-container {
+            display: flex; /* Flexbox 활성화 */
+            justify-content: center; /* 수평 중앙 정렬 */
+            align-items: flex-end; /* 수직 하단 정렬 */
+            width: 100%; /* 부모 컨테이너의 전체 너비 사용 */
+            position: relative; /* 배경 이미지가 절대 위치로 설정될 수 있도록 */
+        }
+
+        .music-body .buildings-container .buildings {
+            width: 180px;
+            height: 70px;
+            position: absolute;
+            bottom: -65px; /* 아래쪽에 위치하도록 */
+        }
+    </style>
+</head>
+<body>
+    <div class="music-body">
+        <div class="music-container" id="music-container">
+            <div class="music-info">
+                <h2 id="title" class="title"></h2>
+                <div class="progress-container" id="progress-container">
+                <div class="progress" id="progress"></div>
+                </div>
+            </div>
+            <audio src=""
+            id="audio"></audio>
+            <div class="img-container">
+            <img decoding="async" src=""
+                    alt="music-cover"
+                    id="cover" />
+            </div>
+            <div class="navigation">
+                <button id="prev" class="action-btn">
+                <i class="fas fa-backward"></i>
+                </button>
+                <button id="play" class="action-btn action-btn-big">
+                <i class="fas fa-play"></i>
+                </button>
+                <button id="next" class="action-btn">
+                <i class="fas fa-forward"></i>
+                </button>
+            </div>
+            <div class="buildings-container">
+                <img class="buildings" src="moonbuildings.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        const musicBody = document.querySelector(".music-body");
+        const musicContainer = document.getElementById("music-container");
+        const playButton = document.getElementById("play");
+        const prevButton = document.getElementById("prev");
+        const nextButton = document.getElementById("next");
+        const audio = document.getElementById("audio");
+        const progress = document.getElementById("progress");
+        const progressContainer = document.getElementById("progress-container");
+        const title = document.getElementById("title");
+        const cover = document.getElementById("cover");
+        
+        // 개별 파일 경로와 이름 지정
+        const songs = [
+            {
+            title: "playing Girev",
+            audioPath: "https://blog.kakaocdn.net/dn/S90RD/btsK3fZOHdD/VyzYAEmd6SzK9BX4VnYTx1/girev.mp3?attach=1&knm=tfile.mp3",
+            imagePath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdHocTG%2FbtsK4N2a7PU%2FpqtpCtgpkSqPCcag7bn9r0%2Fimg.jpg",
+            bgColor: "linear-gradient(to top, #ffa500, #ffec99, #add8e6, #87cefa, #4682b4"
+            /*background: linear-gradient(to top, #ff1493, #ff69b4, #ffb6c1, #dda0dd, #9400d3); */
+            /*background: linear-gradient(to top, #1a2a6c, #ff2a2a, #ffcc00); */
+            /*background: linear-gradient(to top right, #8a2be2, #da70d6, #ff7f50, #ffa500, #ffcc99); */
+            /*background: linear-gradient(to bottom, #fea993, #ffccb3); */
+            /*background: linear-gradient(45deg, #D86C34, #EF7649, #ED8651, #F4A177, #F8C29B); */
+            /*background: linear-gradient(to top right, #8a2be2, #da70d6, #ff7f50, #ffa500, #ffcc99); */
+            /*background: linear-gradient(to top right, #00008B, #8A2BE2, #FF6347, #FFA500, #FFCC99); */
+            /*background: linear-gradient(to top right, #11113b, #0b0b3b, #FF6347, #FFA500, #FF7F50); */
+        },
+            {
+            title: "killing me DJ",
+            audioPath: "https://blog.kakaocdn.net/dn/orsdb/btsK3lZYR4o/PkRqBLoYR7VPQvwGs2bfU0/killing.mp3?attach=1&knm=tfile.mp3",
+            imagePath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc4gpNq%2FbtsK4KqZ1XP%2F4ePS6KK3okEkblOhYsKAik%2Fimg.jpg",
+            bgColor: "linear-gradient(to top, #ffd700, #ff7e5f, #ff4500, #ff6e7f, #d65db1)"   
+            },
+            {
+            title: "Thousand Miles",
+            audioPath: "https://blog.kakaocdn.net/dn/b1iC5v/btsK4XKnrDd/Dkl89pkWU8cWLgKvE1Xyb0/miles.mp3?attach=1&knm=tfile.mp3",
+            imagePath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOpOmk%2FbtsK3h4rfeA%2F1c9fR9DOnCSutmmTk8UrMK%2Fimg.jpg",
+            bgColor: "linear-gradient(to top, #ff416c, #ff8a5c, #6cc0ff, #3f4a68)"  
+            },
+        ];
+        
+        let songIndex = 0; // 기본으로 첫 번째 곡 설정
+        
+        // 노래 정보를 불러오는 함수
+        function loadSong(song) {
+            title.innerText = song.title; // 제목 설정
+            audio.src = song.audioPath; // 오디오 경로 설정
+            cover.src = song.imagePath; // 이미지 경로 설정
+            musicBody.style.background = song.bgColor;
+        }
+        
+        // 노래 재생
+        function playSong() {
+            musicContainer.classList.add("play");
+            playButton.querySelector("i.fas").classList.remove("fa-play");
+            playButton.querySelector("i.fas").classList.add("fa-pause");
+            audio.play();
+        }
+        
+        // 노래 일시 정지
+        function pauseSong() {
+            musicContainer.classList.remove("play");
+            playButton.querySelector("i.fas").classList.remove("fa-pause");
+            playButton.querySelector("i.fas").classList.add("fa-play");
+            audio.pause();
+        }
+        
+        // 이전 곡으로 이동
+        function prevSong() {
+            songIndex--;
+            if (songIndex < 0) songIndex = songs.length - 1;
+            loadSong(songs[songIndex]);
+            playSong();
+        }
+        
+        // 다음 곡으로 이동
+        function nextSong() {
+            songIndex++;
+            if (songIndex > songs.length - 1) songIndex = 0;
+            loadSong(songs[songIndex]);
+            playSong();
+        }
+        
+        // 진행 바 업데이트
+        function updateProgress(e) {
+            const { duration, currentTime } = e.srcElement;
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+        }
+        
+        // 진행 바 클릭 시 위치 설정
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        }
+        
+        // 이벤트 리스너
+        playButton.addEventListener("click", () => {
+            const isPlaying = musicContainer.classList.contains("play");
+            isPlaying ? pauseSong() : playSong();
+        });
+        
+        prevButton.addEventListener("click", prevSong);
+        nextButton.addEventListener("click", nextSong);
+        
+        audio.addEventListener("timeupdate", updateProgress);
+        progressContainer.addEventListener("click", setProgress);
+        
+        audio.addEventListener("ended", nextSong);
+        
+        // 첫 곡 로드
+        loadSong(songs[songIndex]);
+    </script> 
+</body>
+</html>
